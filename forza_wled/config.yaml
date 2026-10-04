@@ -1,0 +1,34 @@
+name: Forza Horizon 6 WLED tachometer
+description: Empfängt Forza Data Out und zeichnet Drehzahl per WLED DDP
+version: "1.1.0"
+slug: forza_wled
+init: false
+arch:
+  - aarch64
+  - amd64
+startup: services
+boot: auto
+ports:
+  20446/udp: 20446
+ports_description:
+  20446/udp: Forza Data Out (Host-Port unter Netzwerk frei wählbar)
+options:
+  forza_source: ""
+  wled_host: ""
+  wled_port: 4048
+  led_count: 300
+  fps: 12
+  telemetry_timeout: 0.7
+  green_until: 58
+  amber_until: 72
+  flash_at: 96
+schema:
+  forza_source: str
+  wled_host: str
+  wled_port: int(1,65535)
+  led_count: int(1,480)
+  fps: float(1,30)
+  telemetry_timeout: float(0.1,10)
+  green_until: float(1,99)
+  amber_until: float(1,99)
+  flash_at: float(1,100)
