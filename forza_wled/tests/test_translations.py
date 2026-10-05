@@ -1,5 +1,6 @@
 """Dependency-free structural checks for the small YAML mapping subset we publish."""
 import re
+import struct
 import unittest
 from pathlib import Path
 
@@ -76,6 +77,17 @@ class TranslationTests(unittest.TestCase):
         manifest = mapping(ROOT / "config.yaml")
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
         self.assertIn(f'ARG BUILD_VERSION={manifest["version"]}', dockerfile)
+
+    def test_visit_url_and_gauge_artwork(self):
+        manifest = mapping(ROOT / "config.yaml")
+        repository = mapping(ROOT.parent / "repository.yaml")
+        self.assertEqual(manifest["url"], repository["url"])
+        self.assertEqual(manifest["url"], "https://github.com/Marcobrmn/forza-horizon-6-wled")
+        for name, dimensions in (("icon.png", (128, 128)), ("logo.png", (250, 100))):
+            with self.subTest(name=name):
+                data = (ROOT / name).read_bytes()
+                self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+                self.assertEqual(struct.unpack(">II", data[16:24]), dimensions)
 
     def test_runtime_validation_errors_use_english(self):
         with self.assertRaisesRegex(ValueError, "forza_source: a single valid IPv4 address"):
