@@ -39,34 +39,34 @@ def ipv4(value, field):
     try:
         address = ipaddress.IPv4Address(value)
     except (ValueError, TypeError, ipaddress.AddressValueError) as exc:
-        raise ValueError(f"{field}: gültige einzelne IPv4-Adresse erforderlich") from exc
+        raise ValueError(f"{field}: a single valid IPv4 address is required") from exc
     if (address.is_unspecified or address.is_multicast or address.is_reserved
             or address.is_link_local or address == ipaddress.IPv4Address("255.255.255.255")):
-        raise ValueError(f"{field}: keine Broadcast-, Multicast- oder Platzhalteradresse zulässig")
+        raise ValueError(f"{field}: broadcast, multicast, and placeholder addresses are not allowed")
     return str(address)
 
 
 def integer(value, field, lower, upper):
     if type(value) is not int or not lower <= value <= upper:
-        raise ValueError(f"{field}: ganze Zahl von {lower} bis {upper} erforderlich")
+        raise ValueError(f"{field}: an integer from {lower} to {upper} is required")
     return value
 
 
 def number(value, field, lower, upper):
     if type(value) not in (float, int) or not math.isfinite(value) or not lower <= value <= upper:
-        raise ValueError(f"{field}: endliche Zahl von {lower} bis {upper} erforderlich")
+        raise ValueError(f"{field}: a finite number from {lower} to {upper} is required")
     return float(value)
 
 
 def validate_options(options):
     if not isinstance(options, dict):
-        raise ValueError("options.json: JSON-Objekt erforderlich")
+        raise ValueError("options.json: a JSON object is required")
     for key in OPTION_KEYS:
         if key not in options:
-            raise ValueError(f"{key}: Option fehlt")
+            raise ValueError(f"{key}: missing option")
     unknown = set(options) - OPTION_KEYS
     if unknown:
-        raise ValueError(f"Unbekannte Option: {sorted(unknown)[0]}; forza_port wird nur unter Netzwerk konfiguriert")
+        raise ValueError(f"Unknown option: {sorted(unknown)[0]}; the Forza host port is configured under Network only")
     source = ipv4(options["forza_source"], "forza_source")
     target = ipv4(options["wled_host"], "wled_host")
     wled_port = integer(options["wled_port"], "wled_port", 1, 65535)
@@ -77,7 +77,7 @@ def validate_options(options):
     amber = number(options["amber_until"], "amber_until", 1, 99)
     flash = number(options["flash_at"], "flash_at", 1, 100)
     if green >= amber:
-        raise ValueError("green_until muss kleiner als amber_until sein")
+        raise ValueError("green_until must be less than amber_until")
     return Config("0.0.0.0", 20446, source, target, wled_port, count, fps,
                   timeout, green / 100, amber / 100, flash / 100)
 
@@ -89,21 +89,21 @@ def load_config(options_path=Path("/data/options.json")):
             with Path(options_path).open(encoding="utf-8") as handle:
                 return validate_options(json.load(handle))
         except (OSError, json.JSONDecodeError) as exc:
-            raise ValueError(f"options.json: kann Konfiguration nicht lesen: {exc}") from exc
+            raise ValueError(f"options.json: cannot read configuration: {exc}") from exc
     env = os.environ
     for key in ("FORZA_SOURCE", "WLED_HOST"):
         if not env.get(key):
-            raise ValueError(f"{key}: IPv4-Adresse für Standalone-Betrieb erforderlich")
+            raise ValueError(f"{key}: an IPv4 address is required for standalone use")
     def env_int(key, default):
         try:
             return int(env.get(key, default))
         except ValueError as exc:
-            raise ValueError(f"{key}: ganze Zahl erforderlich") from exc
+            raise ValueError(f"{key}: an integer is required") from exc
     def env_float(key, default):
         try:
             return float(env.get(key, default))
         except ValueError as exc:
-            raise ValueError(f"{key}: Zahl erforderlich") from exc
+            raise ValueError(f"{key}: a number is required") from exc
     options = {
         "forza_source": env["FORZA_SOURCE"], "wled_host": env["WLED_HOST"],
         "wled_port": env_int("WLED_PORT", 4048), "led_count": env_int("LED_COUNT", 300),
@@ -207,5 +207,5 @@ if __name__ == "__main__":
     try:
         run()
     except (ValueError, OSError) as exc:
-        LOG.error("Konfiguration/Start fehlgeschlagen: %s", exc)
+        LOG.error("Configuration/start failed: %s", exc)
         raise SystemExit(1) from exc
