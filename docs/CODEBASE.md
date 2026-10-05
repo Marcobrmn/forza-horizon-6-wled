@@ -2,12 +2,13 @@
 
 ## Scope and source of truth
 
-An unofficial Home Assistant app receives Forza Horizon 6 Data Out UDP packets and sends RPM-bar pixels to WLED with DDP. Source code and `config.yaml` define runtime behavior; this document maps them but does not override them. No HA light/automation calls, WLED on/off changes, external storage, or generated artifacts are involved. Version 1.1.1 has been installed and started on one local HA OS host; its behavior during an actual drive and third-party installation remain unverified.
+An unofficial Home Assistant app receives Forza Horizon 6 Data Out UDP packets and sends RPM-bar pixels to WLED with DDP. Source code and `config.yaml` define runtime behavior; this document maps them but does not override them. No HA light/automation calls, WLED on/off changes, external storage, or generated artifacts are involved. Version 1.1.2 changes only the Visit link and original artwork relative to 1.1.1; its behavior during an actual drive and third-party installation remain unverified.
 
 ## Files and data flow
 
 - `repository.yaml`: Home Assistant app repository metadata and public project URL; the app is marked experimental in `config.yaml`.
-- `forza_wled/config.yaml`: manifest, option schema/defaults, internal UDP 20446 and host port mapping. IP defaults remain empty.
+- `forza_wled/config.yaml`: manifest, project homepage URL for Home Assistant's Visit action, option schema/defaults, internal UDP 20446 and host port mapping. IP defaults remain empty.
+- `forza_wled/icon.png`, `forza_wled/logo.png`: approved original gauge-only artwork for Home Assistant, 128×128 and 250×100. Editable SVG masters are in `artwork/` at repository root.
 - `forza_wled/translations/en.yaml`: official app translation format: `configuration.<schema_key>.name/description`, plus `network.20446/udp` as a scalar port description. Copy is English only; this file does not change schema or runtime behavior.
 - `forza_wled/Dockerfile`: HA base image, Python runtime, architecture/version labels, startup command.
 - `forza_wled/receiver.py`: validate `/data/options.json` on startup → listen on UDP 20446 → filter sender IPv4 → parse 324-byte Forza telemetry → map RPM to a green/amber/red bar → send WLED DDP frames. When telemetry times out, stop sending; WLED's own realtime timeout restores its prior mode. Standalone mode uses explicit environment endpoints and optionally an environment listener port.
@@ -26,6 +27,6 @@ Run `PYTHONPATH=. python3 -m unittest discover -s forza_wled/tests -v` from the 
 - Options and allowed ranges → `forza_wled/config.yaml`, `receiver.validate_options`, config tests, `forza_wled/translations/en.yaml`, `forza_wled/DOCS.md`.
 - UI text only → translation YAML and related docs/tests; do not add a custom configuration frontend.
 - Parser, frames, timeout → `receiver.py` and receiver/UDP tests; preserve WLED state behavior.
-- Installation/network/troubleshooting → root README and `forza_wled/DOCS.md`; keep container port distinct from host port.
+- Installation/network/troubleshooting → root README and `forza_wled/DOCS.md`; keep container port distinct from host port. Visit link → `config.yaml` `url`; artwork → `artwork/` SVG masters, exported `icon.png` and `logo.png`.
 
-Update this map when schema, runtime data flow, privacy boundaries, or test commands change. Keep real-driving and third-party compatibility claims explicitly labeled; the local 1.1.1 startup does not prove them.
+Update this map when schema, runtime data flow, privacy boundaries, or test commands change. Keep real-driving and third-party compatibility claims explicitly labeled; a local app startup does not prove them.

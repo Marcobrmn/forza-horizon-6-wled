@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 (experimental beta)
+
+- Link the app's Visit action to the public GitHub project via the app manifest `url`.
+- Add an original gauge-only green/amber/red app icon and logo; no branded artwork or extra LED bar.
+- Keep runtime behavior, option schema and defaults unchanged from 1.1.1.
+
 ## 1.1.1 (experimental beta)
 
 - Add English Home Assistant option names, descriptions, and UDP port help using `translations/en.yaml`.
