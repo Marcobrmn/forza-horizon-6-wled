@@ -22,3 +22,5 @@ The game sends one-way UDP telemetry while you drive. This app reads the engine 
 - Keep the UDP listener on a trusted LAN; source-IP filtering cannot prevent spoofed packets.
 
 Updating from 1.0.5? Re-enter the two private device IPs in Configuration; never put them in Git. Keep a backup of the previous app for rollback. Standalone use without Supervisor requires `FORZA_SOURCE` and `WLED_HOST` environment variables; `FORZA_PORT` applies only to standalone mode.
+
+Experimental beta; not affiliated with the game or Home Assistant. Licensed under [MIT](https://github.com/Marcobrmn/forza-horizon-6-wled/blob/main/LICENSE).

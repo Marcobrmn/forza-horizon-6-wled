@@ -6,7 +6,7 @@ An unofficial Home Assistant app receives Forza Horizon 6 Data Out UDP packets a
 
 ## Files and data flow
 
-- `repository.yaml`: Home Assistant app repository metadata; no public URL is configured.
+- `repository.yaml`: Home Assistant app repository metadata and public project URL; the app is marked experimental in `config.yaml`.
 - `forza_wled/config.yaml`: manifest, option schema/defaults, internal UDP 20446 and host port mapping. IP defaults remain empty.
 - `forza_wled/translations/en.yaml`: official app translation format: `configuration.<schema_key>.name/description`, plus `network.20446/udp` as a scalar port description. Copy is English only; this file does not change schema or runtime behavior.
 - `forza_wled/Dockerfile`: HA base image, Python runtime, architecture/version labels, startup command.

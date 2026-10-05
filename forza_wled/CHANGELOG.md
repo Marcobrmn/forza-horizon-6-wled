@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.1 (unreleased)
+## 1.1.1 (experimental beta)
 
 - Add English Home Assistant option names, descriptions, and UDP port help using `translations/en.yaml`.
 - Translate the manifest, setup documentation, changelog, codebase map, and startup validation errors into English.
