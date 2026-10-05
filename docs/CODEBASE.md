@@ -12,7 +12,8 @@ An unofficial Home Assistant app receives Forza Horizon 6 Data Out UDP packets a
 - `forza_wled/Dockerfile`: HA base image, Python runtime, architecture/version labels, startup command.
 - `forza_wled/receiver.py`: validate `/data/options.json` on startup → listen on UDP 20446 → filter sender IPv4 → parse 324-byte Forza telemetry → map RPM to a green/amber/red bar → send WLED DDP frames. When telemetry times out, stop sending; WLED's own realtime timeout restores its prior mode. Standalone mode uses explicit environment endpoints and optionally an environment listener port.
 - `forza_wled/tests/`: config/translation validation, packet and frame regression, and localhost-only UDP→DDP exercise without hardware.
-- `README.md`, `forza_wled/README.md`, `forza_wled/DOCS.md`, `forza_wled/CHANGELOG.md`: entrypoint, app summary, configuration/troubleshooting, and release history.
+- `README.md`, `forza_wled/README.md`, `forza_wled/DOCS.md`, `forza_wled/CHANGELOG.md`: short entrypoint, app summary, configuration/troubleshooting, and release history.
+- `docs/TELEMETRY.md`: source-linked FH6 packet capabilities and explicitly unimplemented future ideas; not a runtime parser specification.
 
 ## Invariants, privacy, and verification
 

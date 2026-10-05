@@ -1,3 +1,5 @@
 # Forza Horizon 6 → WLED
 
-See [DOCS.md](DOCS.md) for setup and every option. The app receives Forza Data Out over UDP and sends an RPM bar using WLED DDP. It does not turn on WLED. Configure device IPv4 addresses under **Configuration**, and the Forza UDP host port under **Network**. English labels and help text live in [`translations/en.yaml`](translations/en.yaml).
+Imagine the rev counter spilling onto your LED strip: the bar grows from green through amber to red as you accelerate. This app receives Forza Horizon 6 Data Out over your LAN and sends a rate-limited RPM display directly to WLED. It never turns WLED on by itself.
+
+[Quick setup and tuning](DOCS.md) · [English setting descriptions](translations/en.yaml)

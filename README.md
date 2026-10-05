@@ -1,26 +1,21 @@
 # Forza Horizon 6 → WLED RPM bar
 
-A free, unofficial **Home Assistant app** that receives Forza Horizon 6 Data Out telemetry over UDP and draws an RPM bar via WLED DDP. No HACS integration or Home Assistant automation is required. The app does **not** turn on an off LED strip; after telemetry stops, it stops sending frames so WLED can leave realtime mode according to WLED's own timeout.
+Imagine the rev counter extending beyond the screen: as the engine revs rise, a WLED strip fills from green through amber to red. This unofficial Home Assistant app listens to Forza Horizon 6 **Data Out** over the local network and sends LED frames straight to WLED. It does not switch the strip on or change your Home Assistant lights.
 
-> **Private pre-release, 1.1.1 candidate:** This repository is not public. Third-party installation and an actual driving test of this version have not been independently confirmed. Not affiliated with Microsoft, Playground Games, Forza, WLED, or Home Assistant.
+> **Private pre-release, 1.1.1:** Not affiliated with Forza, Microsoft, Playground Games, WLED, or Home Assistant. Local installation has been tested; third-party installation and a drive with this version are not yet independently verified.
 
-## Installation (once the repository is public)
+## Quick start
 
-1. On Home Assistant OS or Supervised, open **Settings → Apps → ⋮ → Repositories** and add this repository's future public GitHub URL. Other users cannot install from this repository while it is private.
-2. Install **Forza Horizon 6 WLED tachometer**. Under **Configuration**, set `forza_source` to the game device's IPv4 address and `wled_host` to the WLED controller's IPv4 address. Set `led_count` to match your strip. The defaults are 300 LEDs, DDP port 4048, and a **12 FPS baseline**, not a proven optimum. Leave the IP fields empty only until you have your own addresses: the app cannot start with empty endpoints.
-3. Under **Network**, check or change the exposed UDP **host port** mapped to `20446/udp`. The container always listens on 20446; if you change the host port, set that same port in the game.
-4. In Forza Horizon 6, enable **Data Out**. Set the destination IPv4 to your Home Assistant host and the destination port to the host UDP port shown under Network. Turn WLED on separately, start the app, and test **while driving**.
+- Home Assistant OS / Supervised: after this repository is made public, add its URL under **Settings → Apps → ⋮ → Repositories**, then install **Forza Horizon 6 WLED tachometer**. The private repository is not currently installable by others.
+- In the app's **Configuration**, enter your game device's IPv4 as `forza_source`, WLED's IPv4 as `wled_host`, and the correct `led_count`. The IP defaults are blank on purpose.
+- In **Network**, note the UDP **host port** mapped to `20446/udp` (default 20446).
+- In Forza: **Settings → HUD and Gameplay → Data Out** on; destination IP = your Home Assistant host, destination port = that **host port**. Switch WLED on separately and test while driving.
 
-If nothing appears, check the app logs, Forza destination port, WLED DDP/realtime settings, and LED count. See the [setup, option reference, and troubleshooting guide](forza_wled/DOCS.md).
+The app shows English explanations beside the settings. The LED update rate defaults to 12 FPS; 30 FPS is available but not guaranteed to look different. For troubleshooting and color zones, see the [short setup guide](forza_wled/DOCS.md).
 
-## Setup photo
+## Notes for developers
 
-A real setup photo may be added later at `docs/images/real-setup.jpg`. There is no placeholder photo or claimed screenshot.
-
-## Development
-
-- App source: [`forza_wled/`](forza_wled/) · [codebase map](docs/CODEBASE.md) · [changelog](forza_wled/CHANGELOG.md)
-- Hardware-free tests: `PYTHONPATH=. python3 -m unittest discover -s forza_wled/tests -v`. Synthetic UDP/DDP tests use localhost only.
-- The source-IP filter rejects unintended LAN senders but is not cryptographic authentication. Keep UDP 20446 on your own LAN; do not expose it to the internet.
-
-License: [MIT](LICENSE).
+- [App source](forza_wled/) · [codebase map](docs/CODEBASE.md) · [telemetry and possible future features](docs/TELEMETRY.md) · [changelog](forza_wled/CHANGELOG.md)
+- Tests: `PYTHONPATH=. python3 -m unittest discover -s forza_wled/tests -v` (localhost only).
+- The source-IP filter is not authentication. Keep the UDP port on a trusted LAN; do not expose it to the internet.
+- License: [MIT](LICENSE).
