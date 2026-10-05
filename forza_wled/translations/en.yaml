@@ -1,0 +1,30 @@
+configuration:
+  forza_source:
+    name: Forza device IPv4
+    description: "IPv4 of the PC or console sending Data Out. Example only: 192.0.2.50 (not a usable device address); replace with your own IP. Required."
+  wled_host:
+    name: WLED device IPv4
+    description: "IPv4 of your WLED controller. Example only: 192.0.2.60 (not a usable device address); replace with your own IP. Required."
+  wled_port:
+    name: WLED DDP port
+    description: "Destination UDP port on WLED for DDP. Default 4048; allowed 1–65535. Change only if your WLED setup differs."
+  led_count:
+    name: LED count
+    description: "Number of LEDs in the RPM bar. Match your WLED setup; default 300, allowed 1–480."
+  fps:
+    name: Frames per second
+    description: "DDP update rate. Start with the 12 FPS baseline; adjust 1–30 if needed. Higher is not necessarily better."
+  telemetry_timeout:
+    name: Telemetry timeout (seconds)
+    description: "Stop sending without fresh data. Default 0.7 s; allowed 0.1–10 s. WLED's own realtime timeout restores its previous mode."
+  green_until:
+    name: Green zone ends (%)
+    description: "LED-strip position where amber begins. Default 58%; allowed 1–99%, below amber_until. Green <58%, amber 58–72%, red ≥72% by default. Not an RPM limit."
+  amber_until:
+    name: Amber zone ends (%)
+    description: "LED-strip position where red begins. Default 72%; allowed 1–99%, above green_until. Green <58%, amber 58–72%, red ≥72% by default."
+  flash_at:
+    name: Red flash starts (% max RPM)
+    description: "Flash the lit bar red at this share of the car's reported maximum RPM. Default 96%; allowed 1–100%."
+network:
+  20446/udp: "Forza Data Out UDP host port; set this same port in the game (container port stays 20446)."
