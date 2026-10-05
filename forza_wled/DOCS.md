@@ -5,6 +5,7 @@ The game sends one-way UDP telemetry while you drive. This app reads the engine 
 ## Set it up
 
 - **App → Configuration:** enter the game device's IPv4 (`forza_source`), WLED's IPv4 (`wled_host`), and the LED count. Replace the blank IP defaults with your own addresses. For illustration only: `192.0.2.50` and `192.0.2.60` are *documentation addresses*, not usable device IPs.
+- **Keep addresses stable:** reserve IPs for the game device, Home Assistant host, and WLED in your router's DHCP settings. This normally keeps their addresses stable without setting a manual IP on the PC or console. If the game device's IP changes, update `forza_source`; accepting UDP from every address is not the same as trusting one device.
 - **App → Network:** check the UDP **host port** mapped to `20446/udp`. The internal container port stays 20446.
 - **Forza Horizon 6 → Settings → HUD and Gameplay:** enable **Data Out**. Destination IP = your **Home Assistant host**, destination port = the app's **host port**. Test while actively driving; no telemetry is sent in menus or pauses.
 - **WLED:** switch it on, allow DDP realtime input (normally UDP 4048), and set a suitable realtime timeout.

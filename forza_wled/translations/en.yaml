@@ -1,7 +1,7 @@
 configuration:
   forza_source:
     name: Forza device IPv4
-    description: "IPv4 of the PC or console sending Data Out. Example only: 192.0.2.50 (not a usable device address); replace with your own IP. Required."
+    description: "IPv4 of the PC or console sending Data Out. Reserve this address in your router's DHCP settings to help keep it stable. Example only: 192.0.2.50 (not a usable device address); replace with your own IP. Required."
   wled_host:
     name: WLED device IPv4
     description: "IPv4 of your WLED controller. Example only: 192.0.2.60 (not a usable device address); replace with your own IP. Required."

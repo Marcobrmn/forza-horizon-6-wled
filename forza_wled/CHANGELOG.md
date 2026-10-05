@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.3 (experimental beta)
+
+- Fix both links in the Home Assistant app introduction by using full project URLs instead of relative paths.
+- Explain router DHCP reservations for stable game-device addresses; leave the existing source-IP filter and all runtime options unchanged.
+
 ## 1.1.2 (experimental beta)
 
 - Link the app's Visit action to the public GitHub project via the app manifest `url`.

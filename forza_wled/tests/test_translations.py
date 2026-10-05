@@ -89,6 +89,15 @@ class TranslationTests(unittest.TestCase):
                 self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
                 self.assertEqual(struct.unpack(">II", data[16:24]), dimensions)
 
+    def test_home_assistant_intro_links_are_absolute_and_target_project_files(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        base = "https://github.com/Marcobrmn/forza-horizon-6-wled/blob/main/forza_wled/"
+        links = re.findall(r"\[[^]]+\]\(([^)]+)\)", readme)
+        self.assertEqual(set(links), {base + "DOCS.md", base + "translations/en.yaml"})
+        for link in links:
+            with self.subTest(link=link):
+                self.assertTrue((ROOT / link.removeprefix(base)).is_file())
+
     def test_runtime_validation_errors_use_english(self):
         with self.assertRaisesRegex(ValueError, "forza_source: a single valid IPv4 address"):
             receiver.validate_options(dict(
