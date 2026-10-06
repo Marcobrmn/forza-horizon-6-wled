@@ -20,7 +20,7 @@ The app shows English explanations beside the settings. The LED update rate defa
 
 ## Notes for developers
 
-- [App source](forza_wled/) · [codebase map](docs/CODEBASE.md) · [telemetry and possible future features](docs/TELEMETRY.md) · [changelog](forza_wled/CHANGELOG.md)
+- [App source](forza_wled/) · [codebase map](docs/CODEBASE.md) · [change and PR workflow](docs/CONTRIBUTING.md) · [telemetry and possible future features](docs/TELEMETRY.md) · [changelog](forza_wled/CHANGELOG.md)
 - Tests: `PYTHONPATH=. python3 -m unittest discover -s forza_wled/tests -v` (localhost only).
 - The source-IP filter is not authentication. Keep the UDP port on a trusted LAN; do not expose it to the internet.
 - License: [MIT](LICENSE).
