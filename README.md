@@ -1,6 +1,8 @@
 # Forza Horizon 6 → WLED RPM bar
 
-Imagine the rev counter extending beyond the screen: as the engine revs rise, a WLED strip fills from green through amber to red. This unofficial Home Assistant app listens to Forza Horizon 6 **Data Out** over the local network and sends LED frames straight to WLED. It does not switch the strip on or change your Home Assistant lights.
+I already had a WLED strip and wanted the rev counter in Forza to extend beyond the screen. This project turns the game's data into an RPM bar on the strip.
+
+This unofficial Home Assistant app listens to Forza Horizon 6 **Data Out** over the local network and sends LED frames straight to WLED. It does not switch the strip on or change your Home Assistant lights.
 
 <img width="568" height="242" alt="image" src="https://github.com/user-attachments/assets/f161f3b1-0681-476f-a587-b70611df3600" />
 
